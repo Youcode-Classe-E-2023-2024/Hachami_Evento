@@ -51,4 +51,49 @@ class AuthController extends Controller
 
         }
     }
+
+
+    public function login(Request $request)
+    {
+        $data = $request->all();
+
+        $validator = Validator::make($data,[
+            'email'    => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'          => false,
+                'validationError' => $validator->errors()
+            ]);
+        }else{
+
+            $credentials = $request->only(['email','password']);
+
+            if (Auth::attempt($credentials)) {
+
+                $user = $request->user();
+
+                $token = $user->createToken('Personal Access Token')->accessToken;
+                $token_expires = Carbon::now()->addWeek(1);
+
+
+                return response()->json([
+                    'status'        => true,
+                    'user'          => $user,
+                    'access_token'  => $token,
+                    'token_type'    => "Bearer",
+                    'token_expires' => Carbon::parse($token_expires)->toDateString()
+                ]);
+            }else{
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'This credential does not match our records.'
+                ]);
+            }
+
+        }
+    }
+
 }
