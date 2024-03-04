@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,7 @@ Route::middleware(['auth:api'])->group(function () {
     
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/allUsers', [AdminController::class , 'displayUsers']);
+        Route::resource('categories', CategoryController::class);
     });
 
     // admin routes
