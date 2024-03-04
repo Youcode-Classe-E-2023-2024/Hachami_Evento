@@ -32,5 +32,7 @@ class AdminOrganizer extends Seeder
 
         $organizerRole = Role::findByName('organizer');
         $organizer->assignRole($organizerRole);
+
+        
     }
 }

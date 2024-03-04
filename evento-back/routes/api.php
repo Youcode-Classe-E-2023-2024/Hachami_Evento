@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
@@ -25,9 +26,10 @@ Route::controller(AuthController::class)->group(function() {
 
 Route::middleware(['auth:api'])->group(function () {
     // admin routes
-    Route::get('/admin', function () {
-        return 'admin';
-    })->middleware('role:admin');
+    
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/allUsers', [AdminController::class , 'displayUsers']);
+    });
 
     // admin routes
 

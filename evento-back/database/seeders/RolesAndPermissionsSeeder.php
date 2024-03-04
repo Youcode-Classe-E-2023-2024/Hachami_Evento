@@ -26,7 +26,6 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'access-organizer-dashboard']);
 
 
-        // $adminRole = Role::findByName('admin');
-        // $organizerRole = Role::findByName('organizer');
+        
     }
 }
