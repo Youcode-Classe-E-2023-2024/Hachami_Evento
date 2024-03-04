@@ -52,6 +52,7 @@ class AuthController extends Controller
         }
     }
 
+
     public function login(Request $request)
     {
         $data = $request->all();
@@ -94,4 +95,5 @@ class AuthController extends Controller
 
         }
     }
+
 }
