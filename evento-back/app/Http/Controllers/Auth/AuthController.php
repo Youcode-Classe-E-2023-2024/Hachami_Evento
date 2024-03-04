@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
-class LoginRegisterController extends Controller
+class AuthController extends Controller
 {
      /**
      * Register a new user.

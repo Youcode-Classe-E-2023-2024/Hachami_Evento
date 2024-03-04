@@ -2,8 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,31 +15,32 @@ use App\Http\Controllers\Auth\LoginRegisterController;
 |
 */
 
-// Public routes of authtication
-Route::controller(LoginRegisterController::class)->group(function() {
+Route::controller(AuthController::class)->group(function() {
     Route::post('/register', 'register');
     Route::post('/login', 'login');
 });
 
-// Public routes of product
-Route::controller(ProductController::class)->group(function() {
-    Route::get('/products', 'index');
-    Route::get('/products/{id}', 'show');
-    Route::get('/products/search/{name}', 'search');
-});
 
-// Protected routes of product and logout
-Route::middleware('auth:api')->group( function () {
-    Route::post('/logout', [LoginRegisterController::class, 'logout']);
 
-    Route::controller(ProductController::class)->group(function() {
-        Route::post('/products', 'store');
-        Route::post('/products/{id}', 'update');
-        Route::delete('/products/{id}', 'destroy');
-        
-    });
-    Route::get('/test',function(){
-        return 'dd';
-    });
+
+Route::middleware(['auth:api'])->group(function () {
+    // admin routes
+    Route::get('/admin', function () {
+        return 'admin';
+    })->middleware('role:admin');
+
+    // admin routes
+
+    // organization routes
+    Route::get('/organizer', function () {
+        return 'organizer';
+    })->middleware('role:organizer');
+
+
+
+
+    // Logout
+    Route::post('/logout', [AuthController::class , 'logout']);
+
 
 });
