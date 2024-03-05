@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Models\CategoryModel;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class EventModel extends Model implements HasMedia
 {
@@ -28,4 +29,6 @@ class EventModel extends Model implements HasMedia
     {
         return $this->belongsTo(CategoryModel::class, 'category_id');
     }
+
+    
 }

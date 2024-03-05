@@ -29,7 +29,7 @@ class EventRequest extends FormRequest
             'location' => 'required|string|max:600',
             'ticketsEvent' => 'required|integer',
 
-            'images' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048', 
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ];
     }
 }
