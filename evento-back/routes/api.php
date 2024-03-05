@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
@@ -31,14 +32,18 @@ Route::middleware(['auth:api'])->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/allUsers', [AdminController::class , 'displayUsers']);
         Route::resource('categories', CategoryController::class);
+
     });
 
     // admin routes
 
     // organization routes
-    Route::get('/organizer', function () {
-        return 'organizer';
-    })->middleware('role:organizer');
+    Route::middleware(['role:organizer'])->group(function () {
+        Route::post('addEvent', [EventController::class, 'store']);
+    });
+    
+
+
 
 
 
