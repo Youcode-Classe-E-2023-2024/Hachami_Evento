@@ -32,6 +32,8 @@ Route::middleware(['auth:api'])->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/allUsers', [AdminController::class , 'displayUsers']);
         Route::resource('categories', CategoryController::class);
+        Route::post('accept/{id}', [EventController::class, 'confirmEvent']);
+
 
     });
 
@@ -40,6 +42,7 @@ Route::middleware(['auth:api'])->group(function () {
     // organization routes
     Route::middleware(['role:organizer'])->group(function () {
         Route::post('addEvent', [EventController::class, 'store']);
+
     });
     
 
