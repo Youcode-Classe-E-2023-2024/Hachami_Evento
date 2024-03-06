@@ -10,11 +10,11 @@ import Home from "./Pages/Home";
 const router = createBrowserRouter([
     {
         path: "/",
-        element:<DefaultLayout />,
-        children:[
+        element: <DefaultLayout />,
+        children: [
             {
-                path:'/Home',
-                element : <Home />,
+                index: true,
+                element: <Home />,
             },
             // {
             //     path:'/',
@@ -31,16 +31,16 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path:'/',
-        element:<GuestLayout />,
-        children:[
+        path: '/',
+        element: <GuestLayout />,
+        children: [
             {
-                path:'login',
-                element : <Login />,
+                path: 'login',
+                element: <Login />,
             },
             {
-                path:'signup',
-                element : <Register />,
+                path: 'signup',
+                element: <Register />,
             }
         ],
     }

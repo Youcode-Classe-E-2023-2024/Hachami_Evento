@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom'
 const Login = () => {
   return (
     <>
-       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+       <div className="mt-10 w-1/2 sm:mx-auto sm:w-full sm:max-w-sm rounded  p-10  " style={{'border':'3px solid rgb(79 70 229)','borderRadius':'10px'}}>
+            <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
             Sign in to your account
           </h2>
           <form className="space-y-6" action="#" method="POST">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
                 Email address
               </label>
               <div className="mt-2">
