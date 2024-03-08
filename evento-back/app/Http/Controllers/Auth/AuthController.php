@@ -38,6 +38,43 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
+        $user->assignRole('organizer');
+
+        $data['token'] = $user->createToken($request->email)->accessToken;
+        $data['user'] = $user;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'User is created successfully.',
+            'data' => $data,
+        ];
+
+        return response()->json($response, 201);
+    }
+    public function registerOrganizator(Request $request){
+        $validate = Validator::make($request->all(), [
+            'name' => 'required|string|max:250',
+            'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Validation Error!',
+                'data' => $validate->errors(),
+            ], 403);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $user->assignRole('organizer');
+
+
         $data['token'] = $user->createToken($request->email)->accessToken;
         $data['user'] = $user;
 
@@ -83,12 +120,16 @@ class AuthController extends Controller
         }
 
         $data['token'] = $user->createToken($request->email)->accessToken;
-        $data['user'] = $user;
-        
+        $data['role'] = $roles = $user->getRoleNames()->first();
         $response = [
             'status' => 'success',
             'message' => 'User is logged in successfully.',
-            'data' => $data,
+            'name' => $user->name,
+            'email' => $request->email,
+            'role' => $data['role'],
+            'token'=>$data['token'],
+            
+
         ];
 
         return response()->json($response, 200);
@@ -108,4 +149,7 @@ class AuthController extends Controller
             'message' => 'User is logged out successfully'
             ], 200);
     }    
+
+
+
 }
