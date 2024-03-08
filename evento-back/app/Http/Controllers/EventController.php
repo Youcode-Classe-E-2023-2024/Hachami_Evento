@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use App\Models\CategoryModel;
 
 class EventController extends Controller
 {
@@ -19,16 +20,19 @@ class EventController extends Controller
     public function index(Request $request)
     {
         $title = $request->query('title');
-        $category = $request->query('category');
+        $categoryName = $request->query('category');
+
+        // Retrieve the category ID based on the category name
+        $categoryId = CategoryModel::where('name', $categoryName)->value('id');
 
         // Query events with pagination
-        $events = EventModel::with(['organizator:id,name,email'])
+        $events = EventModel::with(['organizator:id,name,email', 'category'])
             ->where('status', 'accepted')
             ->when($title, function ($query) use ($title) {
                 return $query->where('title', 'like', '%' . $title . '%');
             })
-            ->when($category, function ($query) use ($category) {
-                return $query->where('category_id', $category);
+            ->when($categoryId, function ($query) use ($categoryId) {
+                return $query->where('category_id', $categoryId);
             })
             ->paginate(6);
 
