@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import convertToFormattedDate from '../Utils/convertToFormattedDate'
 
 
-
-const Card = () => {
-
+const Card = ({event}) => {
 
   return (
     <div className="group text-white relative flex min-h-[300px] w-full max-w-[470px] flex-col overflow-hidden rounded-xl bg-gray-900 shadow-lg hover:shadow-lg md:min-h-[438px]">
@@ -22,24 +21,22 @@ const Card = () => {
           <span className="p-semibold-14 w-min rounded-full bg-indigo-700 px-4 py-1 text-green-60">
             100£
           </span>
-          <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1">
-            event name
+          <p className="p-semibold-14 w-min rounded-full bg-green-400  px-4 py-1 text-black  line-clamp-1">
+          {event.category.name}
           </p>
         </div>
 
         <p className="p-medium-16 p-medium-18 text-grey-500">
-          {/* {formatDateTime(event.startDateTime).dateTime} */}
-          Wed, Feb 14, 3:00 PM
-
+          {convertToFormattedDate(event.event_date)}
         </p>
 
         <Link >
-          <p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 ">titile</p>
+          <p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 ">{event.description}</p>
         </Link>
 
         <div className="flex-between w-full">
           <p className="p-medium-14 md:p-medium-16 text-grey-600">
-            mohamed hachami
+            {event.organizator.name}
           </p>
 
          
