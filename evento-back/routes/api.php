@@ -24,6 +24,7 @@ Route::controller(AuthController::class)->group(function() {
     Route::post('/login', 'login');
 });
 
+Route::get('/allCategories',[CategoryController::class,'index'] );
 Route::controller(EventController::class)->group(function() {
     Route::get('/events', 'index');
 });
