@@ -20,8 +20,14 @@ use App\Http\Controllers\CategoryController;
 
 Route::controller(AuthController::class)->group(function() {
     Route::post('/register', 'register');
+    Route::post('/registerOrganizator', 'registerOrganizator');
     Route::post('/login', 'login');
 });
+
+Route::controller(EventController::class)->group(function() {
+    Route::get('/events', 'index');
+});
+
 
 
 
