@@ -14,7 +14,7 @@
     ]
     const NavBar = () => {
         const [openSideBar, setOpenSideBar] = useState(false)
-        const { currentUser, userToken, setCurrentUser, setUserToken } = useStateContext();
+        const { currentUser, userToken, setCurrentUser, setUserToken  } = useStateContext();
         const [profileDropdown, setProfileDropdown] = useState(false)
         const navigate = useNavigate();
 
@@ -74,6 +74,10 @@
                         <a href=""><p>Business</p></a>
                         <a href=""><p>Sports</p></a>
                         <a href=""><p>About</p></a>
+                        {
+                            currentUser.email ? <Link to='myevents'>My Events</Link>:<Link>My Reservations</Link>
+                        }
+                        
                     </div>
                 </nav>
                 <div id="sidebar" className={`${openSideBar ? '' : 'hidden'} absolute sm:w-[30%] w-[60%] h-full bg-white z-[1000] flex items-center justify-start px-3 py-8`} >
