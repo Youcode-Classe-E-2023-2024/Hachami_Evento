@@ -1,16 +1,17 @@
 import { React, useEffect } from 'react'
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link , Navigate } from 'react-router-dom'
 
 import NavBar from '../UI/NavBar'
 import Footer from '../UI/Footer'
 import HeroImg from '../assets/hero.png'
+import { useStateContext } from "../contexts/ContextProvider";
 
 
 
 
 
 export default function DefaultLayout() {
-
+    
 
 
     return (
