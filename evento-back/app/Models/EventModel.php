@@ -24,6 +24,7 @@ class EventModel extends Model implements HasMedia
         'location',
         'ticketsEvent',
         'status',
+        'price',
     ];
 
     public function category()
