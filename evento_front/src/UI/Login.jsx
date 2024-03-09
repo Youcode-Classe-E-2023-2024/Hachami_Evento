@@ -9,34 +9,30 @@ const Login = () => {
   const { setCurrentUser, setUserToken } = useStateContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState({ __html: "" });
+  const [errors, setErrors] = useState({});
 
-  const onSubmit = (ev) => {
-    ev.preventDefault();
-    setError({ __html: "" });
 
-    axiosClient
-      .post("/login", {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); 
+  
+    try {
+      const response = await axiosClient.post('/login', {
         email,
         password,
-      })
-      .then(({ data }) => {
-        setCurrentUser(data.email , data.name , data.role);
-        setUserToken(data.token);
-        navigate('/');
-
-
-      })
-      .catch((error) => {
-        if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
-        }
-        console.error(error);
       });
+  
+      if (response.status === 200) {
+        setCurrentUser(response.data.email, response.data.name, response.data.role);
+        setUserToken(response.data.token);
+        navigate('/');
+      }
+  
+    } catch (error) {
+      if (error.response && error.response.status === 401 && error.response.data) {
+        setErrors(error.response.data.data);
+        console.log(error.response.data.data);
+      }
+    }
   };
   return (
     <>
@@ -44,13 +40,9 @@ const Login = () => {
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">
           Sign in to your account
         </h2>
-        {error.__html && (
-          <div
-            className="bg-red-500 rounded py-2 px-3 text-white"
-            dangerouslySetInnerHTML={error}
-          ></div>
-        )}
-        <form onSubmit={onSubmit} className="space-y-6" >
+        {errors.message && <div className="text-red-700">{errors.message[0]}</div>}
+
+        <form onSubmit={handleSubmit} className="space-y-6" >
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-white">
               Email address
