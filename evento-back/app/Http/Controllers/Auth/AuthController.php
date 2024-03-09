@@ -21,7 +21,8 @@ class AuthController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:250',
             'email' => 'required|string|email:rfc,dns|max:250|unique:users,email',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
+            'userType' => 'required|string',
         ]);
 
         if($validate->fails()){
@@ -37,8 +38,14 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+        
+        if($request->userType ==='organizator'){
+            $user->assignRole('organizer');
+        }else{
+            $user->assignRole('reservator');
+        }
 
-        $user->assignRole('organizer');
+        
 
         $data['token'] = $user->createToken($request->email)->accessToken;
         $data['user'] = $user;
