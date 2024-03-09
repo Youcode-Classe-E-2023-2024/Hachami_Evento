@@ -30,6 +30,7 @@ class EventRequest extends FormRequest
             'event_date' => 'required',
             'location' => 'required|string|max:600',
             'ticketsEvent' => 'required|integer',
+            'price'=>'required',
 
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
