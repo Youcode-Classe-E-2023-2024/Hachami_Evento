@@ -21,12 +21,12 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'organizer']);
-        Role::create(['name' => 'user']);
+        Role::create(['name' => 'reservator']);
 
 
         Permission::create(['name' => 'access-admin-dashboard']);
         Permission::create(['name' => 'access-organizer-dashboard']);
-        Permission::create(['name' => 'access-user-dashboard']);
+        Permission::create(['name' => 'access-reservator-dashboard']);
 
 
 
