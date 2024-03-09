@@ -22,10 +22,8 @@ class EventController extends Controller
         $title = $request->query('title');
         $categoryName = $request->query('category');
 
-        // Retrieve the category ID based on the category name
         $categoryId = CategoryModel::where('name', $categoryName)->value('id');
 
-        // Query events with pagination
         $events = EventModel::with(['organizator:id,name,email', 'category'])
             ->where('status', 'accepted')
             ->when($title, function ($query) use ($title) {
@@ -46,18 +44,18 @@ class EventController extends Controller
             $validatedData = $request->validated();
             $validatedData['organizator_id'] = $user->id;
 
-
             $event = EventModel::create($validatedData);
-            $files = $request->file('images');
-            if (!empty($files)) {
+            if ($request->hasFile('images')) {
+                $files = $request->file('images');
+
                 $event->addMedia($files)
                     ->usingName($request->title)
                     ->toMediaCollection();
-                return response()->json(['message' => 'Event created successfully', 'data' => $event], 201);
-
             } else {
-                return response()->json(['error' => 'Erro in uploading image'], 403);
+                return response()->json(['error' => 'No image uploaded'], 403);
             }
+
+            return response()->json(['message' => 'Event created successfully', 'data' => $event], 201);
 
         } catch (ValidationException $e) {
             return response()->json(['error' => $e->validator->errors()], 422);
