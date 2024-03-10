@@ -3,26 +3,33 @@ import { Link } from 'react-router-dom'
 import convertToFormattedDate from '../Utils/convertToFormattedDate'
 
 
-const Card = ({event}) => {
+const Card = ({ event ,image }) => {
+
+  const modifyUrl = (originalUrl) => {
+    const substring = originalUrl.replace("http://localhost", "");
+
+    return `http://127.0.0.1:8000${substring}`;
+  }
+  // console.log(event.media[0].original_url);
 
   return (
     <div className="group text-white relative flex min-h-[300px] w-full max-w-[470px] flex-col overflow-hidden rounded-xl bg-gray-900 shadow-lg hover:shadow-lg md:min-h-[438px]">
-      <Link 
-        
-        style={{backgroundImage: `url(${'https://cdn.pixabay.com/photo/2023/02/06/10/02/man-7771583_640.jpg'})`}}
+      <Link
+
+        style={{ backgroundImage: `url(${modifyUrl(image)})` }}
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-white"
       />
-      
+
 
       <div
         className=" flex min-h-[180px] flex-col gap-3 p-5 md:gap-4"
-      > 
-       <div className="flex gap-2">
+      >
+        <div className="flex gap-2">
           <span className="p-semibold-14 w-min rounded-full bg-indigo-700 px-4 py-1 text-green-60">
-            100£
+            {event.price}
           </span>
           <p className="p-semibold-14 w-min rounded-full bg-green-400  px-4 py-1 text-black  line-clamp-1">
-          {event.category.name}
+            {event.category.name}
           </p>
         </div>
 
@@ -39,7 +46,7 @@ const Card = ({event}) => {
             {event.organizator.name}
           </p>
 
-         
+
         </div>
       </div>
     </div>
