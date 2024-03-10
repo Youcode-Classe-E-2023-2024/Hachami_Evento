@@ -43,7 +43,7 @@ class AdminDashboard extends Controller
             ->when($categoryId, function ($query) use ($categoryId) {
                 return $query->where('category_id', $categoryId);
             })
-            ->paginate(1);
+            ->paginate(6);
 
         return response()->json($events);
     }
