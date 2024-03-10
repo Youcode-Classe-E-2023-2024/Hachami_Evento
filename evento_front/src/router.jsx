@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import GuestLayout from "./Layouts/GuestLayout";
 import DefaultLayout from "./Layouts/DefaultLayout";

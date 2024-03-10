@@ -41,6 +41,7 @@ class EventController extends Controller
     {
         try {
             $user = Auth::user();
+            
             $validatedData = $request->validated();
             $validatedData['organizator_id'] = $user->id;
 

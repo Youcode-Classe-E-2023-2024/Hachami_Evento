@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
-import useQueryParam from '../Hooks/useQueryParam';
-import { useStateContext } from "../contexts/ContextProvider";
-import axiosClient from "../axios";
+import useQueryParam from '../../../../Hooks/useQueryParam';
+import { useStateContext } from "../../../../contexts/ContextProvider";
+import axiosClient from "../../../../axios";
 import { Select } from 'flowbite-react';
 
 
@@ -42,7 +42,7 @@ const CategoryFilter = () => {
       <Select id="countries"
         onChange={handleCategoryChange}
         value={selectedCategory}
-        class="border  border-gray-300 text-navy-700 dark:text-white block w-full p-2.5 bg-transparent border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500 dark:bg-navy-700">
+        class="border  border-gray-300 text-sm  text-navy-700 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 border-gray-600 placeholder-gray-400  focus:ring-blue-500 focus:border-blue-500">
         <option value="" >Choose a category</option>
 
         {

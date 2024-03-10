@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminDashboard;
 use App\Http\Controllers\EventController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,9 @@ Route::middleware(['auth:api'])->group(function () {
         Route::get('/allUsers', [AdminController::class , 'displayUsers']);
         Route::resource('categories', CategoryController::class);
         Route::post('accept/{id}', [EventController::class, 'confirmEvent']);
+        Route::get('dashboardData' , [AdminDashboard::class, 'getDashboardData']);
+        Route::get('eventsDetail' , [AdminDashboard::class, 'getEventDetails']);
+
 
 
     });
