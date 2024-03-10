@@ -24,12 +24,13 @@ const Collection = ({ data, totalPage }) => {
         <>
             <div className="w-full align-middle justify-center flex flex-wrap flex-col gap-5 md:flex-row">
                 {data && data.length > 0 ? (
+
                     data.map((event) => (
-                        <Card key={event.id} event={event} />
+                        <Card key={event.id} event={event} image={event.media.length > 0 ? event.media[0].original_url : ''} />
                     ))
                 ) : (
                     <div className="w-full align-middle justify-center flex flex-wrap flex-col gap-5 md:flex-row h-16 bg-gray-950 w-1/2 m-auto" style={{ 'alignItems': 'center' }}>
-                        <h1 className='text-white text-3xl'>Not Event found</h1>
+                        <h1 className='text-white text-3xl'>No Event found</h1>
                     </div>
                 )}
             </div>
@@ -40,8 +41,8 @@ const Collection = ({ data, totalPage }) => {
                         disabled={currentPage === 1}
                         type="button"
                         className={`${currentPage === 1
-                                ? 'bg-gray-800 text-white rounded-l-md border-r border-gray-100  px-3  w-32'
-                                : ' text-white rounded-l-md p-2 bg-red-700 hover:text-white px-3 w-32'
+                            ? 'bg-gray-800 text-white rounded-l-md border-r border-gray-100  px-3  w-32'
+                            : ' text-white rounded-l-md p-2 bg-red-700 hover:text-white px-3 w-32'
                             }`}
                     >
                         <div class="flex flex-row align-middle">
@@ -56,8 +57,8 @@ const Collection = ({ data, totalPage }) => {
                         disabled={currentPage === totalPage}
                         type="button"
                         className={`${currentPage === totalPage
-                                ? 'bg-gray-800 text-white rounded-l-md border-r border-gray-100  px-3  w-32'
-                                : ' text-white rounded-l-md p-2 bg-red-700 hover:text-white px-3 w-32'
+                            ? 'bg-gray-800 text-white rounded-l-md border-r border-gray-100  px-3  w-32'
+                            : ' text-white rounded-l-md p-2 bg-red-700 hover:text-white px-3 w-32'
                             }`}
                     >
                         <div class="flex flex-row align-middle">
