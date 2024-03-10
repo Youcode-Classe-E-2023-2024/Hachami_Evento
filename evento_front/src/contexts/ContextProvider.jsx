@@ -25,6 +25,7 @@ export const ContextProvider = ({ children }) => {
     const [query,setQuery] = useState('')
     const [category,setCategory] = useState('')
     const [currentPage,_setCurrentPage] = useState(1)
+    const [status , setStatus] = useState('');
 
     const [userToken, _setUserToken] = useState(localStorage.getItem('TOKEN') || '');
     const [events, setEvents] = useState({
@@ -40,6 +41,7 @@ export const ContextProvider = ({ children }) => {
         "status": "",
         "created_at": "",
         "updated_at": "",
+        // "original_url":""
         
     })
 
@@ -94,6 +96,8 @@ export const ContextProvider = ({ children }) => {
                 setCategory,
                 currentPage,
                 setCurrentPage,
+                status,
+                setStatus
                 
             }}
         >
