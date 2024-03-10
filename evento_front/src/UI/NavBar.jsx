@@ -68,12 +68,12 @@
 
                     <hr className="w-[100%] mx-auto" />
                     <div className="w-full pt-5 font-thin px-8 flex justify-center gap-7 sm:text-[20px] sm:gap-9 text-sm items-center">
-                        <a href=""><p>Home</p></a>
-                        <a href=""><p>News</p></a>
+                        <Link to="/"><p>Home</p></Link>
+                        {/* <a href=""><p>News</p></a>
                         <a href=""><p>Technology</p></a>
                         <a href=""><p>Business</p></a>
                         <a href=""><p>Sports</p></a>
-                        <a href=""><p>About</p></a>
+                        <a href=""><p>About</p></a> */}
                         {
                             currentUser.email ? <Link to='myevents'>My Events</Link>:<Link>My Reservations</Link>
                         }
