@@ -53,6 +53,7 @@ Route::middleware(['auth:api'])->group(function () {
     // organization routes
     Route::middleware(['role:organizer'])->group(function () {
         Route::post('addEvent', [EventController::class, 'store']);
+        Route::get('myEvents', [EventController::class, 'myevents']);
 
     });
     
