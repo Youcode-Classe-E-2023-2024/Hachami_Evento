@@ -24,7 +24,7 @@ class EventController extends Controller
 
         $categoryId = CategoryModel::where('name', $categoryName)->value('id');
 
-        $events = EventModel::with(['organizator:id,name,email', 'category'])
+        $events = EventModel::with(['organizator:id,name,email', 'category' , 'media'])
             ->where('status', 'accepted')
             ->when($title, function ($query) use ($title) {
                 return $query->where('title', 'like', '%' . $title . '%');
@@ -37,11 +37,39 @@ class EventController extends Controller
         return response()->json($events);
     }
 
+    public function myevents(Request $request)
+    {
+        $userId = auth()->user()->id;
+
+        $categoryName = $request->query('category');
+        $title = $request->query('title');
+        $status = $request->query('status');
+
+        $categoryId = CategoryModel::where('name', $categoryName)->value('id');
+
+        $events = EventModel::with(['organizator:id,name,email', 'category', 'media'])
+            ->where('organizator_id', $userId)
+            ->when($title, function ($query) use ($title) {
+                return $query->where('title', 'like', '%' . $title . '%');
+            })
+            ->when($categoryId, function ($query) use ($categoryId) {
+                return $query->where('category_id', $categoryId);
+            })
+            ->when($status, function ($query) use ($status) {
+                return $query->where('status', $status);
+            })
+            ->paginate(6);
+
+       
+
+        return response()->json($events);
+    }
+
     public function store(EventRequest $request)
     {
         try {
             $user = Auth::user();
-            
+
             $validatedData = $request->validated();
             $validatedData['organizator_id'] = $user->id;
 
@@ -56,6 +84,9 @@ class EventController extends Controller
                 return response()->json(['error' => 'No image uploaded'], 403);
             }
 
+            $eventId = $event->id;
+            $event = EventModel::with(['category', 'media'])->find($eventId);
+
             return response()->json(['message' => 'Event created successfully', 'data' => $event], 201);
 
         } catch (ValidationException $e) {
@@ -67,19 +98,20 @@ class EventController extends Controller
 
     }
 
-    public function confirmEvent($id)
+    public function confirmEvent(Request $request, $id)
     {
         $event = EventModel::find($id);
+        $status = $request->Input('status');
 
         if (!$event) {
             return response()->json(['message' => 'Event not found'], 404);
         }
 
-        if ($event->status === 'accepted') {
-            return response()->json(['message' => 'Event is already accepted'], 422);
-        }
+        // if ($event->status === 'accepted') {
+        //     return response()->json(['message' => 'Event is already accepted'], 422);
+        // }
 
-        $event->update(['status' => 'accepted']);
+        $event->update(['status' => $status]);
 
 
         return response()->json(['message' => 'Event status changed to accepted', 'data' => $event], 200);
