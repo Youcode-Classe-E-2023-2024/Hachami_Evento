@@ -7,10 +7,10 @@ const StateContext = createContext({
     currentUser: {},
     userToken: null,
     surveys: [],
-    currentPage :'',
+    currentPage: '',
     setCurrentUser: () => { },
     setUserToken: () => { },
-    setCurrentPage:()=>{},
+    setCurrentPage: () => { },
 });
 
 
@@ -22,9 +22,9 @@ export const ContextProvider = ({ children }) => {
         'role': localStorage.getItem('role') || '',
 
     });
-    const [query,setQuery] = useState('')
-    const [category,setCategory] = useState('')
-    const [currentPage,_setCurrentPage] = useState(1)
+    const [query, setQuery] = useState('')
+    const [category, setCategory] = useState('')
+    const [currentPage, _setCurrentPage] = useState(1)
 
     const [userToken, _setUserToken] = useState(localStorage.getItem('TOKEN') || '');
     const [events, setEvents] = useState({
@@ -36,14 +36,14 @@ export const ContextProvider = ({ children }) => {
         "organizator_email": "",
         "event_date": "",
         "location": "",
-        "ticketsEvent":"",
+        "ticketsEvent": "",
         "status": "",
         "created_at": "",
         "updated_at": "",
-        
+
     })
 
-    const setCurrentPage = (page)=>{
+    const setCurrentPage = (page) => {
         _setCurrentPage(page);
     }
 
@@ -78,7 +78,7 @@ export const ContextProvider = ({ children }) => {
 
 
 
-   
+
     return (
         <StateContext.Provider
             value={{
@@ -94,7 +94,7 @@ export const ContextProvider = ({ children }) => {
                 setCategory,
                 currentPage,
                 setCurrentPage,
-                
+
             }}
         >
             {children}
