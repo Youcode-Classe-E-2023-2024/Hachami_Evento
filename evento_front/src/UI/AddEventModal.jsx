@@ -3,14 +3,16 @@ import React, { useEffect, createRef, useState } from 'react';
 import axiosClient from '../axios';
 import { useStateContext } from '../contexts/ContextProvider';
 import { toast } from 'react-toastify';
+import { Navigate } from 'react-router-dom';
 
 
 
 const AddEventModal = () => {
     const emailInputRef = createRef();
     const [cate, setCate] = useState({});
-    const { userToken } = useStateContext();
-    
+    const { userToken, events, setEvents, query, currentPage, setCurrentPage } = useStateContext();
+
+
 
     const [formData, setFormData] = useState({
         title: '',
@@ -28,7 +30,7 @@ const AddEventModal = () => {
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
-    
+
         if (type === 'file') {
             console.log('Selected file:', files[0].name);
             setFormData((prevData) => ({
@@ -56,7 +58,7 @@ const AddEventModal = () => {
         formdata.append('ticketsEvent', formData.ticketsEvent);
         formdata.append('organizer', formData.organizer);
         formdata.append('images', formData.images);
-    
+
         try {
             const response = await axiosClient.post('/addEvent', formdata, {
                 headers: {
@@ -78,13 +80,11 @@ const AddEventModal = () => {
 
                 });
 
-    
-                // if (fileInputRef.current) {
-                //     fileInputRef.current.value = '';
-                // }
-                // toast.success("Your events has been added !", {
-                //     position: toast.POSITION.TOP_RIGHT
-                // });
+                return <Navigate to="/" />
+
+                
+
+
             }
         } catch (error) {
             if (error.response && error.response.status === 422 && error.response.data) {
@@ -247,7 +247,7 @@ const AddEventModal = () => {
                                     onChange={handleChange}
                                     accept="image/*"
                                     required
-                                    // ref={fileInputRef} // Attach the ref to the file input
+                                // ref={fileInputRef} // Attach the ref to the file input
                                 />
 
 
