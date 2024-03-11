@@ -77,6 +77,7 @@ This React and Laravel-based project serves as an Event Management Platform, ena
 
 # Install dependencies
    ```bash
+   cd evento_admin_dashboard
     npm install
     npm start
     
@@ -85,6 +86,7 @@ This React and Laravel-based project serves as an Event Management Platform, ena
 
 # Install dependencies
    ```bash
+   cd evento_front
     npm install
     npm start
     
