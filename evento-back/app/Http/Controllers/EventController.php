@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventModel;
 
+use App\Models\ReservationModel;
 use Illuminate\Http\Request;
 use App\Http\Requests\EventRequest;
 use Illuminate\Support\Facades\Log;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use App\Models\CategoryModel;
+use Illuminate\Support\Str;
+
 
 class EventController extends Controller
 {
@@ -24,7 +27,7 @@ class EventController extends Controller
 
         $categoryId = CategoryModel::where('name', $categoryName)->value('id');
 
-        $events = EventModel::with(['organizator:id,name,email', 'category' , 'media'])
+        $events = EventModel::with(['organizator:id,name,email', 'category', 'media'])
             ->where('status', 'accepted')
             ->when($title, function ($query) use ($title) {
                 return $query->where('title', 'like', '%' . $title . '%');
@@ -60,7 +63,7 @@ class EventController extends Controller
             })
             ->paginate(6);
 
-       
+
 
         return response()->json($events);
     }
@@ -107,13 +110,66 @@ class EventController extends Controller
             return response()->json(['message' => 'Event not found'], 404);
         }
 
-        // if ($event->status === 'accepted') {
-        //     return response()->json(['message' => 'Event is already accepted'], 422);
-        // }
+
 
         $event->update(['status' => $status]);
 
 
         return response()->json(['message' => 'Event status changed to accepted', 'data' => $event], 200);
+    }
+
+    public function getEventById($id)
+    {
+        try {
+            // Get the event by ID with related data
+            $event = EventModel::with(['organizator:id,name,email', 'media', 'category'])->findOrFail($id);
+
+
+            $responseData = [
+                'event' => $event,
+            ];
+
+            return response()->json($responseData);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
+    }
+
+    public function getRelatedEvent($id)
+    {
+        $event = EventModel::findOrFail($id);
+        $categoryId = $event->category_id;
+
+        $relatedEvents = EventModel::with(['category', 'media'])
+            ->where('category_id', $categoryId) 
+            ->where('id', '!=', $id)
+            ->take(3)
+            ->get();
+
+        return response()->json($relatedEvents);
+    }
+
+    public function reserveTicket($id)
+    {
+        try {
+            // Get the event by ID with related data
+            $event = EventModel::with(['organizator:id,name,email', 'media', 'category'])->findOrFail($id);
+
+            if ($event->ticketsEvent <= 0) {
+                return response()->json(['error' => 'No available tickets'], 403);
+            }
+
+            $event->decrement('ticketsEvent');
+
+            $reservation = ReservationModel::create([
+                'event_id' => $event->id,
+                'user_id' => auth()->user()->id,
+                'slug' => Str::slug($event->title . '-' . auth()->user()->id . '-' . now()),
+            ]);
+            return response()->json(['message' => 'Reservation successful', 'data' => $reservation], 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
 }

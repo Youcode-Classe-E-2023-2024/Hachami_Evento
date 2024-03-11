@@ -9,8 +9,19 @@ class AdminController extends Controller
 {
     
     public function displayUsers(){
-        $users = User::with('roles')->get();
-
-        return response()->json($users);
+        try {
+            $users = User::whereHas('roles', function ($query) {
+                    $query->where('name', '<>', 'admin');
+                })
+                ->select('id', 'name', 'email','created_at')
+                ->get();
+    
+            return response()->json(['users' => $users], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
+
+    
+
 }

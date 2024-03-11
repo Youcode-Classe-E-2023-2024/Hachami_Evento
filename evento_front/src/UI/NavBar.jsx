@@ -75,7 +75,7 @@
                         <a href=""><p>Sports</p></a>
                         <a href=""><p>About</p></a> */}
                         {
-                            currentUser.email ? <Link to='myevents'>My Events</Link>:<Link>My Reservations</Link>
+                            currentUser.role === 'organizer' ? <Link to='myevents'>My Events</Link>:<Link to='myreservations'>My Reservations</Link>
                         }
                         
                     </div>

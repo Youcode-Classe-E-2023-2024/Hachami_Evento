@@ -6,6 +6,7 @@ import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/tables";
 import RTLDefault from "views/rtl/default";
+import Users from "views/admin/users";
 
 // Auth Imports
 import SignIn from "views/auth/SignIn";
@@ -17,6 +18,8 @@ import {
   MdBarChart,
   MdPerson,
   MdLock,
+  MdCategory,
+  MdEventAvailable
 } from "react-icons/md";
 
 const routes = [
@@ -31,24 +34,26 @@ const routes = [
   {
     name: "Events",
     layout: "/admin",
-    icon: <MdBarChart className="h-6 w-6" />,
+    icon: <MdEventAvailable className="h-6 w-6" />,
     path: "data-tables",
     component: <DataTables />,
   },
   {
-    name: "Users",
+    name: "Category",
     layout: "/admin",
-    path: "profile",
-    icon: <MdPerson className="h-6 w-6" />,
+    path: "category",
+    icon: <MdCategory className="h-6 w-6" />,
     component: <Profile />,
   },
+
   {
-    name: "Sign In",
-    layout: "/auth",
-    path: "sign-in",
-    icon: <MdLock className="h-6 w-6" />,
-    component: <SignIn />,
+    name: "Users",
+    layout: "/admin",
+    path: "users",
+    icon: <MdPerson className="h-6 w-6" />,
+    component: <Users />,
   },
+  
   // {
   //   name: "RTL Admin",
   //   layout: "/rtl",

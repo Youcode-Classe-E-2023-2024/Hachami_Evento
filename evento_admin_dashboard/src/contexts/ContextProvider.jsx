@@ -6,7 +6,7 @@ import { createContext } from "react";
 const StateContext = createContext({
     currentUser: {},
     userToken: null,
-    surveys: [],
+    // surveys: [],
     currentPage: '',
     setCurrentUser: () => { },
     setUserToken: () => { },
@@ -46,7 +46,7 @@ export const ContextProvider = ({ children }) => {
     const setCurrentPage = (page) => {
         _setCurrentPage(page);
     }
-
+  
     const setUserToken = (token) => {
         if (token) {
             localStorage.setItem('TOKEN', token)
@@ -94,6 +94,7 @@ export const ContextProvider = ({ children }) => {
                 setCategory,
                 currentPage,
                 setCurrentPage,
+                
 
             }}
         >

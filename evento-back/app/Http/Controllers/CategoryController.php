@@ -28,7 +28,8 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::findOrFail($id);
-        $category->update($request->all());
+        $category->update($request->only('name'));
+
         return response()->json($category, 200);
     }
 

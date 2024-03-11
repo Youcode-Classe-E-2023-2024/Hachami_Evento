@@ -3,13 +3,10 @@ import Card from './Card'
 import { useStateContext } from '../contexts/ContextProvider'
 
 
-const Collection = ({ data, totalPage }) => {
+const MyReservationCollection = ({ data, totalPage }) => {
 
     const { currentPage, setCurrentPage } = useStateContext();
-    if (!data || !Array.isArray(data)) {
-        return null;
-    }
-
+    
     const handlePrevPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -26,10 +23,10 @@ const Collection = ({ data, totalPage }) => {
     return (
         <>
             <div className="w-full align-middle justify-center flex flex-wrap flex-col gap-5 md:flex-row">
-                {data && data?.length > 0 ? (
+                {data && data.length > 0 ? (
 
                     data.map((event) => (
-                        <Card key={event?.id} event={event} image={event?.media && event.media.length > 0 ? event.media[0].original_url : ''} />
+                        <Card key={event.id} event={event} image={event.media.length > 0 ? event.media[0].original_url : ''} />
                     ))
                 ) : (
                     <div className="w-full align-middle justify-center flex flex-wrap flex-col gap-5 md:flex-row h-16 bg-gray-950 w-1/2 m-auto" style={{ 'alignItems': 'center' }}>
@@ -77,4 +74,4 @@ const Collection = ({ data, totalPage }) => {
     )
 }
 
-export default Collection
+export default MyReservationCollection

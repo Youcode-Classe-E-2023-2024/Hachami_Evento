@@ -5,7 +5,8 @@ import Login from "./UI/Login";
 import Register from "./UI/Register";
 import Home from "./Pages/Home";
 import MyEvents from './Pages/MyEvents';
-
+import EventDatail from './Pages/EventDetail';
+import MyReservation from "./Pages/MyReservation";
 
 const router = createBrowserRouter([
     
@@ -18,9 +19,21 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
+                path: '/event/:id', 
+                element: <EventDatail />,
+            },
+            ,
+            // organiz
+            {
                 path:'/myevents',
                 element: <MyEvents />,
             },
+            //reservator
+            {
+                path:'myreservations',
+                element: <MyReservation />,
+            },
+
            
         ]
     },

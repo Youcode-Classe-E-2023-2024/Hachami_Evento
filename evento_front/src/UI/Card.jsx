@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import convertToFormattedDate from '../Utils/convertToFormattedDate'
 
 
-const Card = ({ event ,image }) => {
+const Card = ({ event, image }) => {
+  console.log(event, image)
 
   const modifyUrl = (originalUrl) => {
     const substring = originalUrl.replace("http://localhost", "");
@@ -18,6 +19,7 @@ const Card = ({ event ,image }) => {
 
         style={{ backgroundImage: `url(${modifyUrl(image)})` }}
         className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-white"
+        to={`/event/${event.id}`}
       />
 
 
@@ -26,11 +28,15 @@ const Card = ({ event ,image }) => {
       >
         <div className="flex gap-2">
           <span className="p-semibold-14 w-min rounded-full bg-indigo-700 px-4 py-1 text-green-60">
-            {event.price}
+            {event.price + '$'}
           </span>
-          <p className="p-semibold-14 w-min rounded-full bg-green-400  px-4 py-1 text-black  line-clamp-1">
-            {event.category.name}
-          </p>
+          {
+            event.category && (
+              <p className="p-semibold-14 w-min rounded-full bg-green-400  px-4 py-1 text-black  line-clamp-1">
+                {event.category.name}
+              </p>
+            )
+          }
         </div>
 
         <p className="p-medium-16 p-medium-18 text-grey-500">
@@ -42,9 +48,14 @@ const Card = ({ event ,image }) => {
         </Link>
 
         <div className="flex-between w-full">
-          <p className="p-medium-14 md:p-medium-16 text-grey-600">
-            {event.organizator.name}
-          </p>
+          {
+            event.organizator && (
+              <p className="p-medium-14 md:p-medium-16 text-grey-600">
+                {event.organizator.name}
+              </p>
+            )
+
+          }
 
 
         </div>

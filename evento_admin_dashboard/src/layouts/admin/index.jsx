@@ -1,13 +1,26 @@
 import React from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "components/navbar";
 import Sidebar from "components/sidebar";
 import Footer from "components/footer/Footer";
 import routes from "routes";
+import { useStateContext } from "../../contexts/ContextProvider";
+import { useEffect } from "react";
 
 export default function Admin(props) {
+  const navigate = useNavigate();
   const { ...rest } = props;
-  console.log({ ...rest });
+  const token = localStorage.getItem('TOKEN');
+
+  
+  useEffect(()=>{
+    if(token == null){
+      navigate('/auth/login');
+    }
+  },[])
+
+
+
 
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
