@@ -1,6 +1,9 @@
 # Evento Ticket
 
 ![Evento](https://github.com/Youcode-Classe-E-2023-2024/Hachami_Evento/blob/main/Docs/client_app1.png)
+![Evento](https://github.com/Youcode-Classe-E-2023-2024/Hachami_Evento/blob/main/Docs/client_app2.png)
+![Evento](https://github.com/Youcode-Classe-E-2023-2024/Hachami_Evento/blob/main/Docs/admin_dashb.png)
+
 ## Overview
 
 
